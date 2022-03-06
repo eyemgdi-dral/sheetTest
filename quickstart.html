@@ -10,7 +10,6 @@
         <!--Add buttons to initiate auth sequence and sign out-->
         <button id="authorize_button" style="display: none">Authorize</button>
         <button id="signout_button" style="display: none">Sign Out</button>
-        <button onclick="createSheet()">createSheet</button>
 
         <pre id="content" style="white-space: pre-wrap"></pre>
 
@@ -27,7 +26,8 @@
 
             // Authorization scopes required by the API; multiple scopes can be
             // included, separated by spaces.
-            var SCOPES = "https://www.googleapis.com/auth/spreadsheets";
+            var SCOPES =
+                "https://www.googleapis.com/auth/spreadsheets.readonly";
 
             var authorizeButton = document.getElementById("authorize_button");
             var signoutButton = document.getElementById("signout_button");
@@ -120,12 +120,22 @@
                 gapi.client.sheets.spreadsheets.values
                     .get({
                         spreadsheetId:
-                            "1e89vgtnxoTmZIA1n-Y_zpSiFSdmVGWaXCIzVM_RUk8M",
+                            "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms",
                         range: "Class Data!A2:E",
                     })
                     .then(
                         function (response) {
-                            console.log("response", response);
+                            var range = response.result;
+                            if (range.values.length > 0) {
+                                appendPre("Name, Major:");
+                                for (i = 0; i < range.values.length; i++) {
+                                    var row = range.values[i];
+                                    // Print columns A and E, which correspond to indices 0 and 4.
+                                    appendPre(row[0] + ", " + row[4]);
+                                }
+                            } else {
+                                appendPre("No data found.");
+                            }
                         },
                         function (response) {
                             appendPre(
@@ -133,17 +143,6 @@
                             );
                         }
                     );
-            }
-
-            function createSheet() {
-                var title = "newSheet";
-                gapi.client.sheets.spreadsheets
-                    .create({
-                        properties: {
-                            title: title,
-                        },
-                    })
-                    .then((response) => {});
             }
         </script>
 
