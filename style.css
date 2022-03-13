@@ -1,3 +1,14 @@
+.toggler {
+    position: absolute;
+    top: -50px;
+}
+.cv-grabber-con.hider {
+    left: -100%;
+}
+.cv-grabber-con.hider .toggler {
+    right: -50px;
+}
+
 .cv-grabber-con {
     background-color: black;
     position: fixed;

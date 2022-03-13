@@ -8,6 +8,7 @@ function init() {
         data: {
             isSignedIn: false,
             gapiLoaded: false,
+            grabberToggler: false,
             spreadSheetId: "1EoFWoJTkEbck7NukWQtp5lihvf2FYuqLlhX3g3iLZj0",
             clientId:
                 "428363328956-0skn45p7meq4ej3uene2cs07n6i3f5gf.apps.googleusercontent.com",
@@ -61,6 +62,14 @@ function init() {
             },
         },
         methods: {
+            toggleGrabber: function () {
+                this.grabberToggler = !this.grabberToggler;
+                if (this.grabberToggler) {
+                    $(".cv-grabber-con").addClass("hider");
+                } else {
+                    $(".cv-grabber-con").removeClass("hider");
+                }
+            },
             //auth func
             checkGapi: function () {
                 if (gapi) {
@@ -168,15 +177,18 @@ function init() {
                 $(".val").each((idx, el) => {
                     $el = $(el);
                     var type = $el.prev("div").find("b");
-                    switch ($(type).text()) {
-                        case "Эцэг/эхийн нэр":
-                            console.log($el.text());
-                            this.cv.lName = $el.text();
-                        case "Нэр":
-                            console.log($el.text());
-                            this.cv.fName = $el.text();
-                        case "Төрсөн огноо":
-                            this.cv.birth = $el.text().split("-")[0];
+
+                    console.log($(type).text());
+                    console.log($el.text());
+
+                    if ($(type).text() == "Эцэг/эхийн нэр") {
+                        this.cv.lName = $el.text();
+                    }
+                    if ($(type).text() == "Нэр") {
+                        this.cv.fName = $el.text();
+                    }
+                    if ($(type).text() == "Төрсөн огноо") {
+                        this.cv.birth = $el.text().split("-")[0];
                     }
                 });
 

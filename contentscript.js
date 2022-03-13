@@ -26,6 +26,7 @@ var grabberHtmlDebugg = `<button id="initBtn" onclick="init()">init</button><div
 </div>`;
 
 var grabberHtml = `<div id="cvGrabber">
+<button class="toggler" @click="toggleGrabber()">toggle</button>
 <button v-if="!gapiLoaded" @click="checkGapi()">checkGapi</button>
 <template v-else>
     <template v-if="isSignedIn">
