@@ -67,16 +67,8 @@ if (!location.ancestorOrigins.contains(extensionOrigin)) {
     injectingDiv.className = "cv-grabber-con";
     injectingDiv.innerHTML = grabberHtml;
 
-    var shouldAppend = true;
-    for (let i = 0; i < blackList.length; i++) {
-        const blackLink = blackList[i];
-        if (window.location.host.includes(blackLink)) {
-            shouldAppend = false;
-            console.log("homeLink");
-        }
-    }
-
-    if (shouldAppend) {
+    if (window.location.host.includes("zangia.mn")) {
+        //tailbar
         addCss(srcGrabberCss);
         addScript(srcVue);
         addScript(srcApi);
